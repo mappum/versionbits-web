@@ -41,5 +41,11 @@
     "watchify": "^3.7.0",
     "webcoin-bitcoin": "^3.0.1",
     "webcoin-bitcoin-testnet": "^1.0.2"
+  },
+  "dependencies": {
+    "webcoin": "^2.0.1",
+    "webcoin-bitcoin": "^3.1.2",
+    "webworkify": "^1.4.0",
+    "workerstream": "^1.2.1"
   }
 }
