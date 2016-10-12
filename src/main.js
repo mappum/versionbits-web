@@ -26,7 +26,6 @@ const networks = {
     }]
   }
 }
-networks.bitcoin.params.net.webSeeds = [ 'ws://localhost:8192' ]
 
 function main () {
   var state = {
