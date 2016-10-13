@@ -4,8 +4,8 @@
   "description": "A web viewer for Bitcoin versionbits deployments",
   "main": "index.js",
   "scripts": {
-    "build": "browserify src/main.js -o public/bundle.js -t hyperxify -t [ babelify --presets es2015 ]",
-    "build-debug": "browserify src/main.js -d -o public/bundle.js -t hyperxify -t [ babelify --presets es2015 ]",
+    "build": "browserify src/main.js -o docs/bundle.js -t hyperxify -t [ babelify --presets es2015 ]",
+    "build-debug": "browserify src/main.js -d -o docs/bundle.js -t hyperxify -t [ babelify --presets es2015 ]",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
