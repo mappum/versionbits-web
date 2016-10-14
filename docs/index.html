@@ -4,6 +4,7 @@
   <title>Versionbits</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.red-amber.min.css">
+  <link rel="stylesheet" href="chartist.min.css">
   <link rel="stylesheet" href="style.css">
   <script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
 </head>
@@ -35,6 +36,9 @@
   <main class="mdl-layout__content">
     <div class="mdl-grid">
       <div class="mdl-cell mdl-cell--4-col deployment-card mdl-card mdl-shadow--2dp">
+        <div class="mdl-card__media">
+          <div id="chart" class="chart"></div>
+        </div>
         <div class="mdl-card__title">
           <h2 class="mdl-card__title-text">Segregated Witness</h2>
         </div>

@@ -43,6 +43,7 @@
     "webcoin-bitcoin-testnet": "^1.0.2"
   },
   "dependencies": {
+    "chartist": "^0.9.8",
     "webcoin": "^2.0.1",
     "webcoin-bitcoin": "^3.1.2",
     "webworkify": "^1.4.0",
