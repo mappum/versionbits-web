@@ -21,8 +21,8 @@ var chart = new Chart('#chart', {
   showGrid: false,
   axisX: { offset: 0, showGrid: false },
   axisY: { showLabel: false, offset: 0, showGrid: false },
-  width: 329,
-  height: 220,
+  width: '100%',
+  height: '100%',
   chartPadding: {
     left: 0,
     top: 0,
