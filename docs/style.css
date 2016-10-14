@@ -1,0 +1,25 @@
+.versionbits .mdl-layout__drawer-button {
+  position: static;
+}
+
+.versionbits .mdl-layout__header,
+.versionbits .mdl-layout__drawer-button,
+.versionbits .mdl-layout__header-row .mdl-navigation__link {
+  color: #333;
+}
+
+.deployment-card > .mdl-card__title {
+  color: #fff;
+  height: 220px;
+  background-color: rgb(244,67,54);
+}
+.deployment-card > .mdl-card__supporting-text > .stat label {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 11px;
+  display: block;
+  margin-bottom: 2px;
+}
+.deployment-card > .mdl-card__supporting-text > .stat > .value {
+  font-size: 22px;
+}

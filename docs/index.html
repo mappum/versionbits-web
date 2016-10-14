@@ -1,10 +1,57 @@
 <!doctype HTML>
 <html>
 <head>
-  <title>Versionbits Viewer</title>
+  <title>Versionbits</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.red-amber.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
 </head>
-<body>
-  <div id="app"></div>
+<body class="versionbits mdl-layout mdl-js-layout mdl-layout--no-desktop-drawer-button">
+  <header class="mdl-layout__header mdl-layout__header--transparent">
+    <div class="mdl-layout__header-row">
+      <!-- Title -->
+      <span class="mdl-layout-title">Version Bits Tracker</span>
+      <!-- Add spacer, to align navigation to the right -->
+      <div class="mdl-layout-spacer"></div>
+      <!-- Navigation -->
+      <nav class="mdl-navigation">
+        <a class="mdl-navigation__link" href="">Link</a>
+        <a class="mdl-navigation__link" href="">Link</a>
+        <a class="mdl-navigation__link" href="">Link</a>
+        <a class="mdl-navigation__link" href="">Link</a>
+      </nav>
+    </div>
+  </header>
+  <div class="mdl-layout__drawer">
+    <span class="mdl-layout-title">Version Bits</span>
+    <nav class="mdl-navigation">
+      <a class="mdl-navigation__link" href="">Link</a>
+      <a class="mdl-navigation__link" href="">Link</a>
+      <a class="mdl-navigation__link" href="">Link</a>
+      <a class="mdl-navigation__link" href="">Link</a>
+    </nav>
+  </div>
+  <main class="mdl-layout__content">
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--4-col deployment-card mdl-card mdl-shadow--2dp">
+        <div class="mdl-card__title">
+          <h2 class="mdl-card__title-text">Segregated Witness</h2>
+        </div>
+        <div class="mdl-card__supporting-text">
+          <div id="count" class="stat count">
+            <label>Miner Support</label>
+            <span class="value">1738</span>
+            <span class="unit">blocks</span>
+          </div>
+          <span class="mdl-tooltip" for="count">
+            How many miners support this change, based on the last 2016 blocks.
+          </span>
+        </div>
+      </div>
+    </div>
+    <div id="app"></div>
+  </main>
   <script src="bundle.js"></script>
 </body>
 </html>
