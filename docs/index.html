@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Versionbits</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.red-amber.min.css">
   <link rel="stylesheet" href="chartist.min.css">
@@ -12,7 +13,7 @@
   <header class="mdl-layout__header mdl-layout__header--transparent">
     <div class="mdl-layout__header-row">
       <!-- Title -->
-      <span class="mdl-layout-title">Version Bits Tracker</span>
+      <span class="mdl-layout-title">Bitcoin Version Bits Tracker</span>
       <!-- Add spacer, to align navigation to the right -->
       <div class="mdl-layout-spacer"></div>
       <!-- Navigation -->
@@ -35,7 +36,7 @@
   </div>
   <main class="mdl-layout__content">
     <div class="mdl-grid">
-      <div class="mdl-cell mdl-cell--4-col deployment-card mdl-card mdl-shadow--2dp">
+      <div class="mdl-cell mdl-cell--8-col deployment-card mdl-card mdl-shadow--2dp">
         <div class="mdl-card__media">
           <div id="chart" class="chart"></div>
         </div>
@@ -43,14 +44,47 @@
           <h2 class="mdl-card__title-text">Segregated Witness</h2>
         </div>
         <div class="mdl-card__supporting-text">
-          <div id="count" class="stat count">
+          <div id="support" class="stat support">
             <label>Miner Support</label>
-            <span class="value">1738</span>
-            <span class="unit">blocks</span>
+            <span class="value">78</span>
+            <span class="unit">%</span>
           </div>
-          <span class="mdl-tooltip" for="count">
-            How many miners support this change, based on the last 2016 blocks.
+          <span class="mdl-tooltip" for="support">
+            Based on the last 2016 blocks
           </span>
+        </div>
+      </div>
+      <div class="mdl-cell mdl-cell--4-col mdl-grid">
+        <div class="mdl-cell mdl-cell--12-col side-card blockchain-card mdl-card mdl-shadow--2dp">
+          <div class="mdl-card__supporting-text">
+            <h3>Blockchain Sync</h3>
+            <div id="p1" class="mdl-progress mdl-js-progress"></div>
+            <span class="height">#401168 (March 13, 2015)</span>
+            <code class="hash">00000000000000000530f98d8206725bb5502fdfc7c66dea13c87f4b254366d2</code>
+          </div>
+        </div>
+        <div class="mdl-cell mdl-cell--12-col side-card peer-card mdl-card mdl-shadow--2dp">
+          <div class="mdl-card__supporting-text">
+            <h3>P2P Networking</h3>
+            <ul class="mdl-list">
+            <li class="mdl-list__item">
+              <span class="mdl-list__item-primary-content">
+                Bryan Cranston
+              </span>
+            </li>
+            <li class="mdl-list__item">
+              <span class="mdl-list__item-primary-content">
+                Aaron Paul
+              </span>
+            </li>
+            <li class="mdl-list__item">
+              <span class="mdl-list__item-primary-content">
+                Bob Odenkirk
+              </span>
+            </li>
+          </ul>
+
+          </div>
         </div>
       </div>
     </div>

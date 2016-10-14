@@ -19,6 +19,7 @@ var chart = new Chart('#chart', {
   fullWidth: true,
   showPoint: false,
   showGrid: false,
+  showArea: true,
   axisX: { offset: 0, showGrid: false },
   axisY: { showLabel: false, offset: 0, showGrid: false },
   width: '100%',
