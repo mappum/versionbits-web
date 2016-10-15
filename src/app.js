@@ -29,10 +29,13 @@ class App extends EventEmitter {
 
     this.hx = hyperx(vdom.h)
     this.loop = mainLoop(this.state, this.render.bind(this), vdom)
-    el.appendChild(this.loop.target)
 
     this.node = createNode('bitcoin')
     this.vbits = createVbits('bitcoin', this.node)
+  }
+
+  get element () {
+    return this.loop.target
   }
 
   registerListeners () {
@@ -87,52 +90,48 @@ class App extends EventEmitter {
   }
 
   render (state) {
-    const { hx } = this
+    const hx = this.hx
+    console.log('render', state, this.state)
     return hx`
-      <div>
-        <h1>blockchain sync:</h1>
-        ${state.chain.block ? hx`
-          <span>
-            ${state.chain.block.height}
-            <span> - </span>
-            ${state.chain.block.header.getId()}
-          </span>
-        ` : null}
-        ${state.chain.synced ? hx`
-          <p>Up to date.</p>
-        ` : null}
-        <h1>versionbits sync:</h1>
-        ${state.vbits.block ? hx`
-          <span>
-            ${state.vbits.block.height}
-            <span> - </span>
-            ${state.vbits.block.header.getId()}
-          </span>
-        ` : null}
-        <h1>peers (${state.peers.length}):</h1>
-        <ul>
-        ${state.peers.map((peer) => hx`
-          <li>
-            <span>${peer.version.userAgent}</span>
-          </li>
-        `)}
-        </ul>
-        <h1>deployments:</h1>
-        <ul>
-        ${state.deployments.map((dep) => {
-          if (dep.unknown && dep.count < 10) return
-          return hx`<li>
-            <span>${dep.name}</span>
-            <span> - </span>
-            <span>${dep.status}</span>
-            <span> - </span>
-            <span>${dep.count}</span>
-          </li>`
-        })}
-        </ul>
-        ${Node(hx, state)}
+      <div class="versionbits mdl-layout mdl-js-layout mdl-layout--no-desktop-drawer-button">
+        <header class="mdl-layout__header mdl-layout__header--transparent">
+          <div class="mdl-layout__header-row">
+            <span class="mdl-layout-title">Bitcoin Version Bits Tracker</span>
+            <div class="mdl-layout-spacer"></div>
+            <nav class="mdl-navigation">
+              <a class="mdl-navigation__link" href="">Link</a>
+              <a class="mdl-navigation__link" href="">Link</a>
+              <a class="mdl-navigation__link" href="">Link</a>
+              <a class="mdl-navigation__link" href="">Link</a>
+            </nav>
+          </div>
+        </header>
+        <div class="mdl-layout__content">
+          <div class="mdl-grid">
+            <div class="mdl-cell mdl-cell--8-col deployment-card mdl-card mdl-shadow--2dp">
+              <div class="mdl-card__media">
+                <div id="chart" class="chart"></div>
+              </div>
+              <div class="mdl-card__title">
+                <h2 class="mdl-card__title-text">Segregated Witness</h2>
+              </div>
+              <div class="mdl-card__supporting-text">
+                <div id="support" class="stat support">
+                  <label>Miner Support</label>
+                  <span class="value">78</span>
+                  <span class="unit">%</span>
+                </div>
+                <span class="mdl-tooltip" for="support">
+                  Based on the last 2016 blocks
+                </span>
+              </div>
+            </div>
+            ${Node(hx, state.vbits.block, state.peers)}
+          </div>
+        </div>
         <button onclick=${this.reset}>Reset State</button>
-      </div>`
+      </div>
+    `
   }
 }
 module.exports = old(App)
