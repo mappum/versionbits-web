@@ -9,6 +9,7 @@ const hyperx = require('hyperx')
 const assign = require('object-assign')
 const { createNode, createVbits } = require('./bitcoin.js')
 const Node = require('./components/node.js')
+const Deployments = require('./components/deployments.js')
 
 class App extends EventEmitter {
   constructor (el) {
@@ -40,36 +41,27 @@ class App extends EventEmitter {
 
   registerListeners () {
     const { node, vbits, state } = this
-    const { chain, peers } = node
+    const { peers } = node
     const updateState = this.updateState.bind(this)
 
-    onObj(node).on({
-      synced () {
-        state.chain.synced = true
-        updateState()
-      }
-    })
-    onObj(chain).on({
-      block (block) {
-        state.chain.block = block
-        updateState()
-      }
-    })
     onObj(peers).on({
       peer (block) {
         updateState({ peers: peers.peers })
       }
     })
+
+    var updateDeployments = () => {
+      var deployments = vbits.deployments
+        .filter((d) => !d.unknown || d.count > 50)
+        .map((d) => assign({ support: d.count / 2016 }, d))
+      updateState({ deployments })
+    }
     onObj(vbits).on({
-      ready () {
-        updateState({ deployments: vbits.deployments })
-      },
+      ready () { updateDeployments() },
+      update () { updateDeployments() },
       block (block) {
         state.vbits.block = block
-        updateState()
-      },
-      update () {
-        updateState()
+        updateDeployments()
       }
     })
   }
@@ -91,10 +83,9 @@ class App extends EventEmitter {
 
   render (state) {
     const hx = this.hx
-    console.log('render', state, this.state)
     return hx`
-      <div class="versionbits mdl-layout mdl-js-layout mdl-layout--no-desktop-drawer-button">
-        <header class="mdl-layout__header mdl-layout__header--transparent">
+      <div class="versionbits mdl-layout mdl-js-layout mdl-layout--no-desktop-drawer-button mdl-layout--fixed-header">
+        <header class="mdl-layout__header mdl-layout__header--transparent mdl-layout__header--scroll">
           <div class="mdl-layout__header-row">
             <span class="mdl-layout-title">Bitcoin Version Bits Tracker</span>
             <div class="mdl-layout-spacer"></div>
@@ -108,25 +99,8 @@ class App extends EventEmitter {
         </header>
         <div class="mdl-layout__content">
           <div class="mdl-grid">
-            <div class="mdl-cell mdl-cell--8-col deployment-card mdl-card mdl-shadow--2dp">
-              <div class="mdl-card__media">
-                <div id="chart" class="chart"></div>
-              </div>
-              <div class="mdl-card__title">
-                <h2 class="mdl-card__title-text">Segregated Witness</h2>
-              </div>
-              <div class="mdl-card__supporting-text">
-                <div id="support" class="stat support">
-                  <label>Miner Support</label>
-                  <span class="value">78</span>
-                  <span class="unit">%</span>
-                </div>
-                <span class="mdl-tooltip" for="support">
-                  Based on the last 2016 blocks
-                </span>
-              </div>
-            </div>
-            ${Node(hx, state.vbits.block, state.peers)}
+            ${Deployments(state.deployments, state.vbits.block ? state.vbits.block.height : 0)}
+            ${Node(state.vbits.block, state.peers)}
           </div>
         </div>
         <button onclick=${this.reset}>Reset State</button>

@@ -80,13 +80,16 @@ body {
   padding: 2px;
   display: block;
   border-radius: 1px;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .ct-series-a .ct-line {
   stroke: white;
+  stroke-width: 3px;
 }
 .ct-targetline {
-  stroke-width: 3px;
+  stroke-width: 2px;
   stroke-dasharray: 7px;
   stroke: rgba(255,255,255,0.75);
 }
