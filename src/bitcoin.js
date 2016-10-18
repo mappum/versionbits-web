@@ -8,14 +8,14 @@ const networks = {
   bitcoin: {
     params: require('webcoin-bitcoin'),
     checkpoints: [{
-      height: 399168,
+      height: 409248,
       header: {
         version: 4,
-        prevHash: toHash('0000000000000000074f9edbfc07648dc74392ba8248f0983ffea63431b3bc20'),
-        merkleRoot: toHash('0ed1b9a40f94aec95e2843369bdcabaa42f860c82391c54874a7c193d7268eaa'),
-        timestamp: 1455885256,
-        bits: 403093919,
-        nonce: 3889666804
+        prevHash: toHash('00000000000000000381e6a138308c6547d6fe3eb3437250ffefdebbf71eefd1'),
+        merkleRoot: toHash('139269fa7300981dd7d81c26174a84203a896e77ec6d2ab75ad93c30e84ed644'),
+        timestamp: 1461832110,
+        bits: 403056502,
+        nonce: 38168922
       }
     }]
   }
@@ -35,7 +35,7 @@ module.exports = {
     let vbits = versionbits(params.versionbits, vbitsDb)
     chain.onceReady(() => {
       console.log('blockchain is ready')
-      chain.getBlockAtHeight(399168, (err, block) => {
+      chain.getBlockAtHeight(409248, (err, block) => {
         if (err) return console.log(err)
         console.log(block)
         vbits.getHash((err, hash) => {

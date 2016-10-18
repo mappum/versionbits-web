@@ -16,13 +16,11 @@ class App extends EventEmitter {
     super()
 
     this.state = {
-      chain: {
+      sync: {
         block: null,
-        synced: false
-      },
-      vbits: {
-        block: null,
-        synced: false
+        synced: false,
+        height: 0,
+        startHeight: 0
       },
       peers: [],
       deployments: []
@@ -41,26 +39,63 @@ class App extends EventEmitter {
 
   registerListeners () {
     const { node, vbits, state } = this
-    const { peers } = node
+    const { peers, chain } = node
     const updateState = this.updateState.bind(this)
 
     onObj(peers).on({
       peer (block) {
+        var peerHeight = peers.getPeerChainHeight()
+        if (peerHeight > state.sync.height) {
+          state.sync.height = peerHeight
+        }
         updateState({ peers: peers.peers })
+      }
+    })
+    onObj(chain).on({
+      block (block) {
+        if (block.height > state.sync.height) {
+          state.sync.height = block.height
+        }
+        updateState()
       }
     })
 
     var updateDeployments = () => {
       var deployments = vbits.deployments
         .filter((d) => !d.unknown || d.count > 50)
-        .map((d) => assign({ support: d.count / 2016 }, d))
+        .map((d) => d.status === 'started' ? assign({
+          support: d.rollingCount[d.rollingCount.length - 1] / 2016
+        }, d) : d)
       updateState({ deployments })
     }
+
+    var updateInitialSync = (block) => {
+      state.sync.startHeight = block.height
+      state.sync.block = block
+      updateState()
+    }
+
     onObj(vbits).on({
-      ready () { updateDeployments() },
+      ready () {
+        updateDeployments()
+        vbits.getHash((err, hash) => {
+          if (err) return this.emit('error', err)
+          if (!hash) {
+            chain.getBlockAtHeight(vbits.params.startHeight, (err, block) => {
+              if (err) return this.emit('error', err)
+              updateInitialSync(block)
+            })
+            return
+          }
+          chain.getBlock(hash, (err, block) => {
+            if (err) return this.emit('error', err)
+            updateInitialSync(block)
+          })
+        })
+      },
       update () { updateDeployments() },
       block (block) {
-        state.vbits.block = block
+        state.sync.block = block
         updateDeployments()
       }
     })
@@ -99,8 +134,8 @@ class App extends EventEmitter {
         </header>
         <div class="mdl-layout__content">
           <div class="mdl-grid">
-            ${Deployments(state.deployments, state.vbits.block ? state.vbits.block.height : 0)}
-            ${Node(state.vbits.block, state.peers)}
+            ${Deployments(state.deployments, state.sync.block ? state.sync.block.height : 0)}
+            ${Node(state.sync, state.peers)}
           </div>
         </div>
         <button onclick=${this.reset}>Reset State</button>

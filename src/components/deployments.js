@@ -73,29 +73,65 @@ class Chart {
   }
 }
 
-module.exports = function (deployments) {
-  var deployment = (d) => hx`
-    <div class="mdl-cell mdl-cell--12-col deployment-card mdl-card mdl-shadow--4dp">
-      <div class="mdl-card__media">
-        ${new Chart(d.rollingCount)}
-      </div>
-      <div class="mdl-card__title">
-        <h2 class="mdl-card__title-text">${d.name}</h2>
-      </div>
-      <div class="mdl-card__supporting-text">
-        <div id="support" class="stat support">
-          <label>Miner Support</label>
-          <span class="value">${(d.support * 100).toFixed(1)}</span>
-          <span class="unit">%</span>
-          <span>${d.rollingCount.join()}</span>
+function deployment (d) {
+  var defined = d.status === 'defined'
+  var started = d.status === 'started'
+  var lockedIn = d.status === 'lockedIn'
+  var activated = d.status === 'activated'
+
+  return hx`
+    <div class="mdl-cell mdl-cell--12-col deployment-card deployment-${d.status} mdl-card mdl-shadow--4dp">
+      ${started ? hx`
+        <div class="mdl-card__media">
+          ${new Chart(d.rollingCount)}
         </div>
-        <span class="mdl-tooltip" for="support">
-          Based on the last 2016 blocks
-        </span>
+      ` : null}
+
+      <div class="mdl-card__title">
+        <div>
+          <h2 class="mdl-card__title-text">${d.name}</h2>
+          ${defined ? hx`
+            <p class="mdl-card__subtitle-text">Not started yet</p>
+          ` : null}
+        </div>
       </div>
+
+      <div class="mdl-card__supporting-text">
+        ${defined ? hx`
+          <div class="stat begin-date">
+            <label>Deployment Start Time</label>
+            <span class="value">${new Date(d.start * 1000).toLocaleString()}</span>
+          </div>
+        ` : null}
+        ${started ? hx`
+          <div id="deployment-${d.id}-support" class="stat support">
+            <label>Miner Support</label>
+            <span class="value">${(d.support * 100).toFixed(1)}</span>
+            <span class="unit">%</span>
+            <span class="mdl-tooltip" for="deployment-${d.id}-support">
+              Based on the last 2016 blocks
+            </span>
+          </div>
+        ` : null}
+        ${lockedIn ? hx`
+          <div>
+            <p class="succeeded">
+              <i class="material-icons">face</i>
+              <span> </span>
+              <span>The deployment suceeded!</span>
+            </p>
+            <p>
+              <span>The new rules will come into effect on: </span>
+              <strong>block&nbsp;#${d.activationHeight}</strong>
+            </p>
+          </div>
+        ` : null}
+        </div>
     </div>
   `
+}
 
+module.exports = function (deployments) {
   return hx`
     <div class="mdl-cell mdl-cell--8-col mdl-grid">
       ${deployments.map(deployment)}

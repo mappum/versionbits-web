@@ -13,20 +13,23 @@ body {
 }
 
 .deployment-card {
-  height: 362px;
+  height: 0;
+  min-height: 170px;
+}
+.deployment-started {
+  height: 355px;
+}
+.deployment-card > .mdl-card__title h2 {
+  margin: 0;
+}
+.deployment-card > .mdl-card__title:first-child h2 {
+  margin-top: 22px;
 }
 .deployment-card > .mdl-card__media {
   height: 220px;
   background-color: rgb(244,67,54);
-  z-index: 2;
-}
-.deployment-card > .mdl-card__title > h2 {
-  z-index: 20;
-  /*text-shadow: 0 0 2px rgba(0,0,0,0.5);*/
-  line-height: 34px;
 }
 .deployment-card > .mdl-card__media > .chart {
-  z-index: 10;
   position: absolute;
   top: 0;
   left: 0;

@@ -2,8 +2,14 @@
 
 const h = require('virtual-dom/h')
 const hx = require('hyperx')(h)
+const ProgressBar = require('./progressBar.js')
 
-module.exports = function (block, peers) {
+module.exports = function (sync, peers) {
+  const { block, startHeight, height } = sync
+
+  var progress = ((block ? block.height : 0) - startHeight) /
+    (height - startHeight) * 100
+
   return hx`
     <div class="mdl-cell mdl-cell--4-col mdl-grid">
       <div class="mdl-cell mdl-cell--12-col side-card blockchain-card mdl-card mdl-shadow--1dp">
@@ -11,7 +17,7 @@ module.exports = function (block, peers) {
           <h3>Blockchain Sync</h3>
           ${block ? hx`
             <div>
-              <div id="p1" class="mdl-progress mdl-js-progress"></div>
+              ${ProgressBar(progress)}
               <span class="height"><strong>#${block.height || 0}</strong> - ${new Date((block.header.timestamp || 0) * 1000).toLocaleDateString()}</span>
               <code class="hash">${block.header.getId()}</code>
             </div>
