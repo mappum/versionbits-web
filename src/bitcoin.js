@@ -34,10 +34,8 @@ module.exports = {
     let vbitsDb = level(`${id}.versionbits`)
     let vbits = versionbits(params.versionbits, vbitsDb)
     chain.onceReady(() => {
-      console.log('blockchain is ready')
       chain.getBlockAtHeight(409248, (err, block) => {
         if (err) return console.log(err)
-        console.log(block)
         vbits.getHash((err, hash) => {
           if (err) return console.log(err)
           pump(

@@ -30,6 +30,7 @@
     "blockchain-download": "^1.0.0",
     "blockchain-spv": "^2.0.5",
     "browserify": "^13.0.1",
+    "budo": "^9.2.1",
     "hyperx": "^2.0.4",
     "hyperxify": "^2.0.1",
     "level-browserify": "^1.1.0",

@@ -12,6 +12,13 @@ body {
   color: #333;
 }
 
+.deployments {
+  -webkit-align-items: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+  -webkit-align-content: flex-start;
+  align-content: flex-start;
+}
 .deployment-card {
   height: 0;
   min-height: 170px;
@@ -79,7 +86,6 @@ body {
   line-height: 16px;
   background-color: #f5f5f5;
   border: 1px solid #f0f0f0;
-  overflow-wrap: break-word;
   padding: 2px;
   display: block;
   border-radius: 1px;

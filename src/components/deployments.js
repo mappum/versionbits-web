@@ -80,7 +80,7 @@ function deployment (d) {
   var activated = d.status === 'activated'
 
   return hx`
-    <div class="mdl-cell mdl-cell--12-col deployment-card deployment-${d.status} mdl-card mdl-shadow--4dp">
+    <div class="mdl-cell mdl-cell--12-col deployment-card deployment-${d.status} mdl-card mdl-shadow--2dp">
       ${started ? hx`
         <div class="mdl-card__media">
           ${new Chart(d.rollingCount)}
@@ -116,13 +116,22 @@ function deployment (d) {
         ${lockedIn ? hx`
           <div>
             <p class="succeeded">
-              <i class="material-icons">face</i>
+              <i class="material-icons">done</i>
               <span> </span>
               <span>The deployment suceeded!</span>
             </p>
             <p>
               <span>The new rules will come into effect on: </span>
-              <strong>block&nbsp;#${d.activationHeight}</strong>
+              <strong>block #${d.activationHeight}</strong>
+            </p>
+          </div>
+        ` : null}
+        ${activated ? hx`
+          <div>
+            <p class="succeeded">
+              <i class="material-icons">done all</i>
+              <span> </span>
+              <span>Active since block <strong>#${d.activationHeight}</strong></span>
             </p>
           </div>
         ` : null}
@@ -133,7 +142,7 @@ function deployment (d) {
 
 module.exports = function (deployments) {
   return hx`
-    <div class="mdl-cell mdl-cell--8-col mdl-grid">
+    <div class="deployments mdl-cell mdl-cell--8-col mdl-grid">
       ${deployments.map(deployment)}
     </div>
   `
