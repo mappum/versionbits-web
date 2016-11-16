@@ -65,7 +65,8 @@ class App extends EventEmitter {
         .filter((d) => !d.unknown || d.count > 50)
         .map((d) => {
           if (d.status !== 'started') return d
-          var elapsed = state.sync.height - d.startHeight
+          if (!state.sync.block) return d
+          var elapsed = state.sync.block.height - d.startHeight
           var period = Math.min(elapsed, 2016)
           return assign({
             support: d.rollingCount[d.rollingCount.length - 1] / period
@@ -125,7 +126,7 @@ class App extends EventEmitter {
     const hx = this.hx
     return hx`
       <div class="versionbits mdl-layout mdl-js-layout mdl-layout--no-desktop-drawer-button mdl-layout--fixed-header">
-        <header class="mdl-layout__header mdl-layout__header--transparent mdl-layout__header--scroll">
+        <header style="display:none" class="mdl-layout__header mdl-layout__header--transparent mdl-layout__header--scroll">
           <div class="mdl-layout__header-row">
             <span class="mdl-layout-title">Bitcoin Version Bits Tracker</span>
             <div class="mdl-layout-spacer"></div>
