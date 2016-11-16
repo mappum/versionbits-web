@@ -77,7 +77,7 @@ class App extends EventEmitter {
     var updateInitialSync = (block) => {
       state.sync.startHeight = block.height
       state.sync.block = block
-      updateState()
+      updateDeployments()
     }
 
     onObj(vbits).on({
