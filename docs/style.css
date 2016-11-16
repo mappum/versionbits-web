@@ -43,17 +43,25 @@ body {
   right: 0;
   height: 220px;
 }
-.deployment-card > .mdl-card__supporting-text > .stat label {
+.deployment-card > .mdl-card__supporting-text .stat:not(:first-child) {
+  margin-left: 20px;
+  border-left: 1px solid #eee;
+  padding-left: 20px;
+}
+.deployment-card > .mdl-card__supporting-text .stat {
+  display: inline-block;
+}
+.deployment-card > .mdl-card__supporting-text .stat label {
   text-transform: uppercase;
   font-weight: bold;
   font-size: 11px;
   display: block;
   margin-bottom: 2px;
 }
-.deployment-card > .mdl-card__supporting-text > .stat.support > .value {
+.deployment-card > .mdl-card__supporting-text .stat > .value {
   font-size: 30px;
 }
-.deployment-card > .mdl-card__supporting-text > .stat.support > .unit {
+.deployment-card > .mdl-card__supporting-text .stat > .unit {
   font-size: 20px;
 }
 
@@ -66,6 +74,29 @@ body {
 @media (max-width: 839px) {
   .mdl-grid .mdl-grid {
     width: 100%;
+  }
+
+  .deployment-card {
+    height: 402px;
+  }
+  .deployment-card > .mdl-card__supporting-text .stat:not(:first-child) {
+    margin-left: 0;
+    border-left: none;
+    padding-left: 0;
+    margin-top: 10px;
+    display: block;
+  }
+  .deployment-card > .mdl-card__supporting-text .stat label {
+    display: inline-block;
+    width: 120px;
+  }
+  .deployment-card > .mdl-card__supporting-text .stat > .value {
+    font-size: 18px;
+    display: inline;
+  }
+  .deployment-card > .mdl-card__supporting-text .stat > .unit {
+    font-size: 12px;
+    display: inline;
   }
 }
 .side-card > .mdl-card__supporting-text > h3 {
