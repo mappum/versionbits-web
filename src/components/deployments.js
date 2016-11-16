@@ -74,6 +74,8 @@ class Chart {
 }
 
 function deployment (d) {
+  if (d.id !== 'segwit') return null
+
   var defined = d.status === 'defined'
   var started = d.status === 'started'
   var lockedIn = d.status === 'lockedIn'
@@ -104,13 +106,25 @@ function deployment (d) {
           </div>
         ` : null}
         ${started ? hx`
-          <div id="deployment-${d.id}-support" class="stat support">
-            <label>Miner Support</label>
-            <span class="value">${(d.support * 100).toFixed(1)}</span>
-            <span class="unit">%</span>
-            <span class="mdl-tooltip" for="deployment-${d.id}-support">
-              Based on the last 2016 blocks
-            </span>
+          <div>
+            <div id="deployment-${d.id}-support" class="stat support">
+              <label>Miner Support</label>
+              <span class="value">${(d.support * 100).toFixed(1)}</span>
+              <span class="unit">%</span>
+              <span class="mdl-tooltip" for="deployment-${d.id}-support">
+                Based on the last 2016 blocks
+              </span>
+            </div>
+            <div id="deployment-${d.id}-rolling-count" class="stat rolling-count">
+              <label>Count (Last 2016)</label>
+              <span class="value">${d.rollingCount[d.rollingCount.length - 1]}</span>
+              <span class="unit">blocks</span>
+            </div>
+            <div id="deployment-${d.id}-count" class="stat count">
+              <label>Count (This Period)</label>
+              <span class="value">${d.count}</span>
+              <span class="unit">blocks</span>
+            </div>
           </div>
         ` : null}
         ${lockedIn ? hx`

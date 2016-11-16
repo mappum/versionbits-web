@@ -63,9 +63,14 @@ class App extends EventEmitter {
     var updateDeployments = () => {
       var deployments = vbits.deployments
         .filter((d) => !d.unknown || d.count > 50)
-        .map((d) => d.status === 'started' ? assign({
-          support: d.rollingCount[d.rollingCount.length - 1] / 2016
-        }, d) : d)
+        .map((d) => {
+          if (d.status !== 'started') return d
+          var elapsed = state.sync.height - d.startHeight
+          var period = Math.min(elapsed, 2016)
+          return assign({
+            support: d.rollingCount[d.rollingCount.length - 1] / period
+          }, d)
+        })
       updateState({ deployments })
     }
 
