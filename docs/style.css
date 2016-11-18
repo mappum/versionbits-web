@@ -64,6 +64,9 @@ body {
 .deployment-card > .mdl-card__supporting-text .stat > .unit {
   font-size: 20px;
 }
+.deployment-card.deployment-defined > .mdl-card__supporting-text .stat > .value {
+  font-size: 20px;
+}
 
 .side-card {
   min-height: 170px;
@@ -75,8 +78,7 @@ body {
   .mdl-grid .mdl-grid {
     width: 100%;
   }
-
-  .deployment-card {
+  .deployment-card.started {
     height: 402px;
   }
   .deployment-card > .mdl-card__supporting-text .stat:not(:first-child) {
@@ -122,6 +124,12 @@ body {
   border-radius: 1px;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+.blockchain-card .uptodate {
+  color: rgb(76, 175, 80);
+}
+.blockchain-card .uptodate i {
+  vertical-align: middle;
 }
 
 .ct-series-a .ct-line {

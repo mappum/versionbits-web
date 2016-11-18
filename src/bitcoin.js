@@ -40,26 +40,27 @@ module.exports = {
     let { params } = networks[id]
     let vbitsDb = level(`${id}.versionbits`)
     let vbits = versionbits(params.versionbits, vbitsDb)
-    chain.onceReady(() => {
-      let startVbits = () => {
-        chain.getBlockAtHeight(437473, (err, block) => {
-          if (err && !err.notFound) return console.log(err)
-          if (!block) {
-            return chain.on('commit', startVbits)
-          }
-          vbits.getHash((err, hash) => {
-            if (err) return console.log(err)
-            pump(
-              chain.createReadStream({ from: hash || block.header.getHash() }),
-              vbits,
-              (err) => {
-                if (err) console.log(err.stack)
-              })
-          })
+    let startVbits = () => {
+      console.log('startVbits')
+      chain.getBlockAtHeight(437473, (err, block) => {
+        if (err && !err.notFound) return console.log(err)
+        if (!block) {
+          return chain.once('commit', startVbits)
+        }
+        console.log('vbits start block:', block)
+        vbits.getHash((err, hash) => {
+          if (err) return console.log(err)
+          pump(
+            chain.createReadStream({ from: hash || block.header.getHash() }),
+            vbits,
+            (err) => {
+              console.log('ended')
+              if (err) console.log(err.stack)
+            })
         })
-      }
-      startVbits()
-    })
+      })
+    }
+    chain.onceReady(startVbits)
     return vbits
   }
 }

@@ -36,7 +36,7 @@ class Chart {
       },
       smoothLine: false
     })
-    this.drawTargetLine(this.chart, 1915)
+    this.drawTargetLine(this.chart, 1916)
     this.updatedAt = Date.now()
     return el
   }
@@ -92,9 +92,9 @@ function deployment (d) {
       <div class="mdl-card__title">
         <div>
           <h2 class="mdl-card__title-text">${d.name}</h2>
-          ${defined ? hx`
+          ${/* defined ? hx`
             <p class="mdl-card__subtitle-text">Not started yet</p>
-          ` : null}
+          ` : null */ null}
         </div>
       </div>
 

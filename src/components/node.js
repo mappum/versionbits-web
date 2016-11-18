@@ -4,11 +4,18 @@ const h = require('virtual-dom/h')
 const hx = require('hyperx')(h)
 const ProgressBar = require('./progressBar.js')
 
+function reset () {
+  window.indexedDB.deleteDatabase('IDBWrapper-bitcoin.node')
+  window.indexedDB.deleteDatabase('IDBWrapper-bitcoin.versionbits')
+  window.location.reload()
+}
+
 module.exports = function (sync, peers) {
   const { block, startHeight, height } = sync
 
   var progress = ((block ? block.height : 0) - startHeight) /
     (height - startHeight) * 100
+  var synced = sync.synced && height === block.height
 
   return hx`
     <div class="mdl-cell mdl-cell--4-col mdl-grid">
@@ -17,9 +24,18 @@ module.exports = function (sync, peers) {
           <h3>Blockchain Sync</h3>
           ${block ? hx`
             <div>
-              ${ProgressBar(progress)}
+              ${synced ? hx`
+                <span class="uptodate">
+                  <i class="material-icons">done</i>
+                  Up-to-date
+                </span>
+              ` : ProgressBar(progress)}
               <span class="height"><strong>#${block.height || 0}</strong> - ${new Date((block.header.timestamp || 0) * 1000).toLocaleDateString()}</span>
               <code class="hash">${block.header.getId()}</code>
+              <br>
+              <button onclick=${reset} class="mdl-button mdl-js-button">
+                Re-sync
+              </button>
             </div>
           ` : null}
         </div>

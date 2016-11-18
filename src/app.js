@@ -59,6 +59,11 @@ class App extends EventEmitter {
         updateState()
       }
     })
+    onObj(node).on({
+      synced () {
+        state.sync.synced = true
+      }
+    })
 
     var updateDeployments = () => {
       var deployments = vbits.deployments
@@ -116,12 +121,6 @@ class App extends EventEmitter {
     this.node.start()
   }
 
-  reset () {
-    window.indexedDB.deleteDatabase('IDBWrapper-bitcoin.node')
-    window.indexedDB.deleteDatabase('IDBWrapper-bitcoin.versionbits')
-    window.location.reload()
-  }
-
   render (state) {
     const hx = this.hx
     return hx`
@@ -144,7 +143,6 @@ class App extends EventEmitter {
             ${Node(state.sync, state.peers)}
           </div>
         </div>
-        <button onclick=${this.reset}>Reset State</button>
       </div>
     `
   }
