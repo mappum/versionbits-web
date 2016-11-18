@@ -92,9 +92,6 @@ function deployment (d) {
       <div class="mdl-card__title">
         <div>
           <h2 class="mdl-card__title-text">${d.name}</h2>
-          ${/* defined ? hx`
-            <p class="mdl-card__subtitle-text">Not started yet</p>
-          ` : null */ null}
         </div>
       </div>
 

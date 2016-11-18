@@ -4,9 +4,12 @@
   "description": "A web viewer for Bitcoin versionbits deployments",
   "main": "index.js",
   "scripts": {
-    "build": "browserify src/main.js -o docs/bundle.js -t [ babelify --presets es2015 ]",
-    "debug": "cd docs && beefy ../src/main.js:bundle.js --live -- -t [ babelify --presets es2015 ]",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rm -rf lib && babel --presets es2015 src -d lib && browserify lib/main.js -o docs/bundle.js -t [ babelify --presets es2015 ]",
+    "debug": "cd docs && beefy ../lib/main.js:bundle.js --live -- -t [ babelify --presets es2015 ]",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "source": "rm -rf lib && ln -s src lib",
+    "prepublish": "npm run build",
+    "publish": "npm run source"
   },
   "keywords": [
     "webcoin",
@@ -22,7 +25,8 @@
   "author": "Matt Bell <mappum@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "babel-preset-es2015": "^6.9.0",
+    "babel-cli": "^6.18.0",
+    "babel-preset-es2015": "^6.18.0",
     "babelify": "^7.3.0",
     "beefy": "^2.1.8",
     "bitcoin-net": "^4.2.4",
@@ -38,6 +42,7 @@
     "object-assign": "^4.1.0",
     "pump": "^1.0.1",
     "setimmediate": "^1.0.4",
+    "uglify-js": "^2.7.4",
     "versionbits": "0.0.0",
     "virtual-dom": "^2.1.1",
     "watchify": "^3.7.0",
